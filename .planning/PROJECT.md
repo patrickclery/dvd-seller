@@ -94,7 +94,10 @@ Turn a stack of DVD spine photos into a browsable, filterable, shareable catalog
 | Images loaded on demand from provider CDN by default; local cache opt-in | Zero hosting for assets; repo stays small; user explicitly OK with on-demand loading | — Pending |
 | Catalog stored as committed JSON, populated by an agent skill | No database server; git history is the audit log; skill is portable to other sellers | — Pending |
 | Configurable `basePath` (`/sale/dvds`) | Lets the same build serve as its own Pages site or be mounted under patrickclery.com | — Pending |
-| Check existing OSS before building | User asked for a quick prior-art check of popular, maintained GitHub projects | — Pending (research) |
+| Check existing OSS before building | User asked for a quick prior-art check of popular, maintained GitHub projects | ✓ Done — verdict BUILD. seerr (12.6k★), Yamtrack/Ryot (3.6k★), Watcharr, Movary, DVinyl (224★) all need server+DB; static repos are 0–5★ and abandoned; nothing does photo ingestion. Borrow UX idioms from seerr only |
+| TMDB used under non-commercial posture | TMDB free key is non-commercial; staff treat non-monetized public pages as fine. Site has no ads, no checkout, no affiliate links, shows TMDB attribution + logo, stores `fetchedAt` for the 6-month cache rule | — Pending (revisit if skill is sold or payments/ads appear) |
+| Deploy topology: own project Pages site first, then main-site compose | Project Pages inherit the account custom domain, so `patrickclery.com/dvd-seller/` is live with zero coordination; mounting at `/sale/dvds` from a separate repo needs a compose job in the main site's workflow — land it last once the build is proven | — Pending |
+| Ingestion is propose → review → commit | TMDB search is popularity-ranked and returns remakes first; silent wrong matches ship wrong products. Year-scoped search, collision detection, batched seller confirmation | — Pending |
 
 ## Evolution
 
