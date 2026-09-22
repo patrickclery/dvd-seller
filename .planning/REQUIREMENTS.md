@@ -141,13 +141,66 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (populated by roadmapper) | | |
+| DATA-01 | Phase 1 | Pending |
+| DATA-02 | Phase 1 | Pending |
+| DATA-03 | Phase 1 | Pending |
+| DATA-04 | Phase 1 | Pending |
+| DATA-05 | Phase 1 | Pending |
+| DATA-06 | Phase 1 | Pending |
+| DATA-07 | Phase 1 | Pending |
+| DATA-08 | Phase 1 | Pending |
+| CAT-01 | Phase 1 | Pending |
+| CAT-02 | Phase 1 | Pending |
+| CAT-03 | Phase 1 | Pending |
+| CAT-04 | Phase 1 | Pending |
+| CAT-05 | Phase 1 | Pending |
+| CAT-06 | Phase 1 | Pending |
+| CAT-07 | Phase 1 | Pending |
+| CAT-08 | Phase 1 | Pending |
+| CAT-09 | Phase 1 | Pending |
+| CAT-10 | Phase 1 | Pending |
+| CAT-11 | Phase 1 | Pending |
+| CAT-12 | Phase 1 | Pending |
+| CAT-13 | Phase 1 | Pending |
+| DTL-01 | Phase 2 | Pending |
+| DTL-02 | Phase 2 | Pending |
+| DTL-03 | Phase 2 | Pending |
+| DTL-04 | Phase 2 | Pending |
+| DTL-05 | Phase 2 | Pending |
+| DTL-06 | Phase 2 | Pending |
+| DTL-07 | Phase 2 | Pending |
+| DTL-08 | Phase 2 | Pending |
+| SALE-01 | Phase 2 | Pending |
+| SALE-02 | Phase 2 | Pending |
+| SALE-03 | Phase 2 | Pending |
+| SALE-04 | Phase 1 | Pending |
+| ING-01 | Phase 3 | Pending |
+| ING-02 | Phase 3 | Pending |
+| ING-03 | Phase 3 | Pending |
+| ING-04 | Phase 3 | Pending |
+| ING-05 | Phase 3 | Pending |
+| ING-06 | Phase 3 | Pending |
+| ING-07 | Phase 3 | Pending |
+| ING-08 | Phase 3 | Pending |
+| SKILL-01 | Phase 4 | Pending |
+| SKILL-02 | Phase 4 | Pending |
+| SKILL-03 | Phase 4 | Pending |
+| SKILL-04 | Phase 4 | Pending |
+| SKILL-05 | Phase 4 | Pending |
+| SKILL-06 | Phase 4 | Pending |
+| SKILL-07 | Phase 4 | Pending |
+| DEP-01 | Phase 2 | Pending |
+| DEP-02 | Phase 1 | Pending |
+| DEP-03 | Phase 2 | Pending |
+| DEP-04 | Phase 2 | Pending |
+| DEP-05 | Phase 5 | Pending |
+| DEP-06 | Phase 2 | Pending |
 
 **Coverage:**
-- v1 requirements: 51 total
-- Mapped to phases: 0
-- Unmapped: 51 ⚠️
+- v1 requirements: 54 total
+- Mapped to phases: 54
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-09-21*
-*Last updated: 2026-09-21 after initial definition*
+*Last updated: 2026-09-21 after roadmap creation (traceability mapped, count corrected 51 -> 54)*
