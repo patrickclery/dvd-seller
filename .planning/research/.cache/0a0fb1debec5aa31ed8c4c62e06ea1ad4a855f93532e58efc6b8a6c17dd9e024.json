@@ -1,0 +1,1 @@
+{"content":"OMDb free key: 1,000 requests/day (apikey.aspx). Lookup by i=<imdb_id> or t=<title>; returns imdbRating, imdbVotes, Ratings[] (Rotten Tomatoes, Metacritic). Poster API is patron-only; do not rely on OMDb posters.","source":"web","provider":"webfetch","confidence":"LOW","fetched_at":"2026-09-22T02:42:10.217Z","ttl":86400000,"kind":"web"}
