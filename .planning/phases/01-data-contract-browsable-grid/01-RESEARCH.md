@@ -798,16 +798,18 @@ for a in $(grep -o '\(src\|href\)="/sale/dvds/_next[^"]*"' out/index.html | sed 
 | A5 | TMDB `release_dates.results[].release_dates[].type === 3` (Theatrical) carries the MPAA certification for US titles; some titles only have it on type 4/5 | seed.ts | Wrong/empty `certification` on a few seeds; the code falls back to any US entry with a non-empty certification. Phase 1 UI does not display certification |
 | A6 | The Claude Code secret-read hook does not inspect `npm run seed`'s child command (`tsx --env-file-if-exists=.env.local …`) | Pitfall 9 | Executor cannot run the seed; D-14 already mandates a human checkpoint — Patrick runs `npm run seed` himself |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Does `npm run seed` survive the secret-read hook?**
+1. **Does `npm run seed` survive the secret-read hook?** — RESOLVED
    - What we know: direct `node --env-file=.env.local` and `grep .env.local` are blocked for the agent.
    - What's unclear: whether a `package.json` script containing the path is also blocked.
    - Recommendation: planner keeps the seed task as `checkpoint:human-action` (D-14) with the exact command for Patrick; the executor verifies the resulting `data/catalog.json` with `npm run validate`.
+   - RESOLVED: plan 01-01 Task 4 (seed) step 12 — the executor runs `npm run seed` (the `.env.local` path lives only inside the package.json script, and the token was verified present by the orchestrator on 2026-10-07); if and only if the hook still blocks it, the task raises a dynamic blocking `checkpoint:human-action` with the exact command `npm run seed && npm run validate` for Patrick and continues from the resulting `data/catalog.json` once validate reports `OK: 12 movies`.
 
-2. **Should `eslint-config-prettier` be added now?**
+2. **Should `eslint-config-prettier` be added now?** — RESOLVED
    - What we know: `eslint-config-next` includes no stylistic rules that conflict with Prettier defaults in the probe (0 errors, 1 semantic warning).
    - Recommendation: skip; add only if `npm run lint` and `npm run format:check` disagree.
+   - RESOLVED: plan 01-02 Task 1 — not added; `eslint.config.mjs` is `eslint-config-next` core-web-vitals + typescript with the single `no-img-element` override, and the phase-end repo-wide `npm run lint && npm run format:check` pass (01-02 `<verification>`) is the trigger for revisiting.
 
 ## Environment Availability
 

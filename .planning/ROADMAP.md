@@ -21,6 +21,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 ## Phase Details
 
 ### Phase 1: Data Contract & Browsable Grid
+
 **Goal**: A buyer can open the site (locally, under any base path) and filter, sort, and search a poster grid of seed DVDs, backed by one schema-validated catalog file that both the SPA and the ingestion scripts will share
 **Mode:** mvp
 **Depends on**: Nothing (first phase)
@@ -31,11 +32,23 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Sold DVDs are hidden by default and, when Availability is set to Sold or All, render desaturated with a SOLD ribbon; the header shows total and available counts plus the configured seller blurb
   4. `npm run build` fails loudly when `data/catalog.json` contains a malformed entry or a duplicate slug/tmdbId, and `NEXT_PUBLIC_BASE_PATH=/sale/dvds npm run build` served from a nested folder renders the grid with every asset and URL resolving through `withBasePath()`
   5. The browser network tab shows only `image.tmdb.org` image loads at runtime (zero metadata API calls); the repo contains no `.env*`, `.cache/`, photo directories, or API keys, none appear in the built bundle, and a no-op rewrite of the catalog produces an empty git diff
-**Plans**: TBD
+
+**Plans:** 4 plans
+
+Plans:
+**Wave 1**
+- [ ] 01-01-PLAN.md — Walking skeleton: scaffold + zod contract + TMDB seed + one-path grid with URL search under `/sale/dvds` (legitimacy + D-01 gates)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+- [ ] 01-02-PLAN.md — Contract hardening: schema/text/writer/validate-CLI specs, ESLint 9 + Prettier, `.env.example`
+- [ ] 01-03-PLAN.md — Browse controls: filters/sort/search pure functions + toolbar, chips, mobile sheet, count, Clear all, empty state
+- [ ] 01-04-PLAN.md — Card visuals & sale state: rating badge, price/condition chips, placeholder poster, SOLD/Reserved treatments
+
 **UI hint**: yes
 **Research**: no (Next.js static export, `generateStaticParams`, `basePath`, Suspense + `useSearchParams` are official-docs territory mirrored by the sibling repo; TMDB non-commercial posture already recorded in PROJECT.md Key Decisions)
 
 ### Phase 2: Detail Pages, Sale Flow & Live Deploy
+
 **Goal**: Every DVD has a deep-linkable Plex-style page on the live `patrickclery.com/dvd-seller/` site where a buyer can see the full details, preview the link in a messaging app, and contact the seller in one tap
 **Mode:** mvp
 **Depends on**: Phase 1
@@ -46,11 +59,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Pasting a detail URL into a messaging app renders a preview with title, poster, and price/status; an unknown slug lands on the static 404 page; the TMDB attribution notice and logo appear in the root layout on every page
   4. Back-navigating from a detail page returns the visitor to the grid with their previous filters, sort, and search intact
   5. Pushing to `main` runs an Actions workflow (Node 22, `npm ci`, validate, matrix build for `""` and `/sale/dvds`, link check on `out/`, `.nojekyll` assertion, leaked-key grep) and publishes to the repo's own project Pages site; the repo contains no `CNAME` and the site is not linked from the patrickclery.com homepage
+
 **Plans**: TBD
 **UI hint**: yes
 **Research**: no (verbatim copy of a workflow already running in production; detail-page patterns are standard App Router static export)
 
 ### Phase 3: Ingestion Scripts
+
 **Goal**: Seller can turn a typed list of title/year guesses into fully enriched, deduplicated, schema-valid catalog entries from the CLI, with remakes surfaced as ambiguous rather than silently matched
 **Mode:** mvp
 **Depends on**: Phase 1 (shared schema); can run in parallel with Phase 2
@@ -61,10 +76,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Re-ingesting a title already in the catalog (same `tmdbId` + edition) offers to increment quantity or skip instead of creating a duplicate; seller can mark an entry sold (status + `soldAt`) or edit seller-owned fields via script without hand-editing JSON
   4. Any write that fails schema validation is refused and the catalog is never left partially written (atomic write); output ordering and key order are deterministic
   5. The golden test set of 15+ hard titles passes with every remake pair reported ambiguous; all TMDB/OMDb calls are throttled (concurrency <= 4, 429 backoff) and cached under gitignored `.cache/`; the OMDb daily-budget guard trips before the free-tier limit; API keys are read only from environment variables and never reach the browser bundle
+
 **Plans**: TBD
 **Research**: no (TMDB/OMDb endpoints, `append_to_response`, throttling and disk caching are fully specified in research/STACK.md and research/ARCHITECTURE.md)
 
 ### Phase 4: Ingestion Skill & Catalog Fill
+
 **Goal**: Seller points the skill at a folder of shelf photos and ends up with the real collection in the catalog, having reviewed only the uncertain reads
 **Mode:** mvp
 **Depends on**: Phase 3
@@ -75,10 +92,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Seller can run a dry-run showing spine text -> matched title (year) -> confidence with zero writes, and can pass batch defaults (condition, price, format, region) that apply to every item with per-item override
   4. Each run ends with an acceptance-rate summary (auto-accepted / confirmed / skipped) and `rawText` is kept on each entry for audit
   5. Another seller can follow the README to install the skill in a clean directory and run a dry-run; the catalog path resolves from argument, `DVD_CATALOG_PATH`, or the project default, with no Patrick-specific constants or keys
+
 **Plans**: TBD
 **Research**: yes (vision prompt design for rotated, glare-prone, many-spines-per-photo input is the least documented part of the project; spike with 3-5 real shelf photos before committing the SKILL.md rubric; verify current Claude Code skill frontmatter (`allowed-tools`, `disable-model-invocation`, `${CLAUDE_SKILL_DIR}`) against live docs)
 
 ### Phase 5: Mount at /sale/dvds
+
 **Goal**: Buyers reach the catalog at its intended address `patrickclery.com/sale/dvds` with every deep link working, rebuilt automatically whenever this repo's catalog changes
 **Mode:** mvp
 **Depends on**: Phase 2 (live build proven), Phase 4 (catalog populated)
@@ -87,6 +106,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   1. Visitor can open `patrickclery.com/sale/dvds/` and any `/sale/dvds/movie/{slug}/` deep link; grid, filters, posters, OG previews, and mailto deep links all resolve under the new base path
   2. Pushing a catalog change to this repo's `main` fires `repository_dispatch`, and the main site's workflow checks out this repo, builds with `NEXT_PUBLIC_BASE_PATH=/sale/dvds`, copies `out/` into `out/sale/dvds/`, and redeploys, with no `CNAME` added to this repo
   3. A decision is recorded in PROJECT.md Key Decisions on whether `/dvd-seller/` stays as a preview or is disabled, and the live state matches it
+
 **Plans**: TBD
 **Research**: yes (cross-repo compose has known permission and staleness traps: fine-grained PAT scopes for `repository_dispatch`, build-from-source vs publishing an `out/` branch, 90-day artifact expiry, disabling vs keeping the `/dvd-seller/` site)
 
@@ -97,7 +117,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5. Phase 3 depends only on 
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Data Contract & Browsable Grid | 0/TBD | Not started | - |
+| 1. Data Contract & Browsable Grid | 0/4 | Planned | - |
 | 2. Detail Pages, Sale Flow & Live Deploy | 0/TBD | Not started | - |
 | 3. Ingestion Scripts | 0/TBD | Not started | - |
 | 4. Ingestion Skill & Catalog Fill | 0/TBD | Not started | - |

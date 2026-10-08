@@ -24,3 +24,6 @@ photos/
 
 # misc
 .DS_Store
+
+# plan-phase probe scratch
+.planning/phases/*/.probe/
