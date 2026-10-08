@@ -1,0 +1,26 @@
+# dependencies / build
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# secrets — never commit
+.env
+.env.*
+!.env.example
+
+# ingestion working data (photos, API response cache)
+.cache/
+photos/
+*.jpg
+*.jpeg
+*.png
+*.heic
+*.webp
+!public/**/*.png
+!public/**/*.jpg
+!public/**/*.webp
+
+# misc
+.DS_Store
